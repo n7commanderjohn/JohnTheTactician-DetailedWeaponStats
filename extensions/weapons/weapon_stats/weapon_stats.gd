@@ -1,14 +1,18 @@
 extends "res://weapons/weapon_stats/weapon_stats.gd"
 
+# Brief overview of what the changes in this file do...
+# Expands weapon stats
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
+const MYMOD_LOG = "JohnTheTactician-DetailedWeaponStats" # ! Change `MODNAME` to your actual mod's name
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	ModLoaderUtils.log_info("Ready for weapon deatail stats", MYMOD_LOG)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
