@@ -15,15 +15,15 @@ var dir = ""
 var ext_dir = ""
 
 
-func _init(modLoader = ModLoader):
-	ModLoaderUtils.log_info("Init", MYMOD_LOG)
+func _init(_modLoader = ModLoaderMod):
+	ModLoaderLog.info("Init", MYMOD_LOG)
 
 	# ! We can't use `ModLoader` because the ModLoader instance isn't available
 	# ! at this point in the mod's loading process. Instead, the class instance
 	# ! is passed to a mod's `_init` func via the variable `modLoader`.
 	# ! It will be available in any other places in your mod though, such as in
 	# ! your _ready func.
-	dir = modLoader.UNPACKED_DIR + MOD_DIR
+	dir = ModLoaderMod.get_unpacked_dir() + MOD_DIR
 	ext_dir = dir + "extensions/" # ! any script extensions should go in this folder, and should follow the same folder structure as vanilla
 
 	# Add extensions
@@ -33,7 +33,7 @@ func _init(modLoader = ModLoader):
 	#modLoader.install_script_extension(ext_dir + "entities/units/player/player.gd") # ! Note that this file does not exist in this example mod
 
 	# ! Add extensions (longform version of the above)
-	modLoader.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
 	#modLoader.install_script_extension("res://mods-unpacked/AuthorName-ModName/extensions/entities/units/player/player.gd")
 
 	# Add translations
@@ -46,9 +46,9 @@ func _init(modLoader = ModLoader):
 
 
 func _ready()->void:
-	ModLoaderUtils.log_info("Ready", MYMOD_LOG)
+	ModLoaderLog.info("Ready", MYMOD_LOG)
 
 	# ! This uses Godot's native `tr` func, which translates a string. You'll
 	# ! find this particular string in the example CSV here: translations/modname.csv
-	# ModLoaderUtils.log_info(str("Translation Demo: ", tr("MODNAME_READY_TEXT")), MYMOD_LOG)
-	ModLoaderUtils.log_info("Detailed Weapon Stats", MYMOD_LOG)
+	# ModLoaderLog.info(str("Translation Demo: ", tr("MODNAME_READY_TEXT")), MYMOD_LOG)
+	ModLoaderLog.info("Detailed Weapon Stats", MYMOD_LOG)
