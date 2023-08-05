@@ -3,7 +3,7 @@
   "namespace": "JohnTheTactician",
   "version_number": "1.1.0",
   "description": "Show more weapon stats...",
-  "website_url": "https://github.com/exampleauthor/examplemod",
+  "website_url": "https://github.com/n7commanderjohn/JohnTheTactician-DetailedWeaponStats",
   "dependencies": [],
   "extra": {
     "godot": {
