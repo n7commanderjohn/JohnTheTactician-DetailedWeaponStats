@@ -34,9 +34,10 @@ func _init(_modLoaderMod = ModLoaderMod):
 
 	# ! Add extensions (longform version of the above)
 	# ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
-	ModLoaderLog.info("before starting deferred call for the mod", MYMOD_LOG)
-	ModLoaderMod.new().call_deferred("install_script_extension", "res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
-	ModLoaderLog.info("after starting deferred call for the mod", MYMOD_LOG)
+	ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/ui/menu/shop/item_description.gd")
+	# ModLoaderLog.info("before starting deferred call for the mod", MYMOD_LOG)
+	# ModLoaderMod.new().call_deferred("install_script_extension", "res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	# ModLoaderLog.info("after starting deferred call for the mod", MYMOD_LOG)
 	# ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
 
 	#modLoader.install_script_extension("res://mods-unpacked/AuthorName-ModName/extensions/entities/units/player/player.gd")
