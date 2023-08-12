@@ -24,124 +24,85 @@ var col_neg_a = "[color=" + NEG_COLOR_STR + "]"
 var col_b = "[/color]"
 var init_a = " [color=" + GRAY_COLOR_STR + "]| "
 
-# var col_a = "[color=#" + Utils.SECONDARY_FONT_COLOR.to_html() + "]"
-# var col_neutral_a = "[color=white]"
-# var col_pos_a = "[color=" + Utils.POS_COLOR_STR + "]"
-# var col_neg_a = "[color=" + Utils.NEG_COLOR_STR + "]"
-# var col_b = "[/color]"
-# var init_a = " [color=" + Utils.GRAY_COLOR_STR + "]| "
-
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	ModLoaderLog.info("Inside of _ready() of item_description.gd", MYMOD_LOG)
-
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
+enum Type{MELEE, RANGED}
+
 func set_item(item_data)->void :
 	.set_item(item_data)
 	###todo and test
 	if item_data is WeaponData:
-		# var want_text = {tr("STAT_DAMAGE"):0,tr("CRITICAL"):1,tr("COOLDOWN"):2}
-		# var stat_text = get_weapon_stats().bbcode_text
-		# var stats_array = stat_text.split("\n")
-		# var dmg = 1.0
-		# var pro_nb = 1.0
-		# var crit_chance = 0.0
-		# var crit_dmg = 1.0
-		# var atk_spd = 1.0
-		# for array in stats_array:
-		# 	if want_text.size() == 0:break
-		# 	for stat_name in want_text:
-		# 		if array.find(stat_name):
-		# 			var values = get_value_array(array)
-		# 			ModLoaderLog.info(str(values), "weaponstats")
-		# 			match want_text[stat_name]:
-		# 				0:
-		# 					dmg = values.front()
-		# 					if values.size()>1:
-		# 						pro_nb = values.back()
-		# 				1:
-		# 					crit_chance = values.back() / 100.0
-		# 					crit_dmg = values.front()
-		# 				2:
-		# 					atk_spd = values.front()
 
-		var weapstats = get_weapon_stats()
-		# var weapstats2 = weapstats if expand_indefinitely else _weapon_stats_scrolled
+		var text = ""
+		var stats = item_data.stats
+		
+		# var scaling_stats = item_data.stats.scaling_stats
+		# var projectiles = stats.nb_projectiles
 
-		# weapstats2.append_bbcode("\nOriginal CritChance: " + get_crit_chance_text(crit_chance))
-		_weapon_stats.append_bbcode("\nThe Stats: " + str(WeaponService.init_base_stats(_weapon_stats)))
-		# weapstats2.append_bbcode("\nThe Stats: " + str(WeaponService.init_base_stats(weapstats2)))
-		ModLoaderLog.info(str(WeaponService.init_base_stats(_weapon_stats)), "weaponstats")
-		ModLoaderLog.info(str(WeaponService.init_base_stats(item_data)), "item_data")
-		# weapstats2.append_bbcode("\nOriginal CritChance: " + str(WeaponService.init_base_stats(weapstats2)))
-		# weapstats2.append_bbcode("\nOriginal Damage: " + get_dmg_text_with_scaling_stats(dmg))
-		# weapstats2.append_bbcode("\nOriginal Cooldown: " + get_cooldown_text(atk_spd))
-		_weapon_stats.append_bbcode("\nOriginal CritChance: " + str(WeaponService.init_base_stats(_weapon_stats)))
-
-# var description_regex = RegEx.new()
-# func get_value_array(strs:String)->Array:#():
-# 	var cs = []
-# 	var _error = description_regex.compile("(?<=\\])x?-?[0-9]\\.?[0-9]*s?(?=\\[)|(?<=\\])x+-?[0-9]+(?= (\\(|\\[))") #查找特征
-# 	var decs = strs
-# 	var results = description_regex.search_all(decs)
-# 	if results:
-# 		for i in results:
-# 			var ss = i.get_string()
-# 			ss = ss.replace("x","")
-# 			ss = ss.replace("s","")
-# 			ss = ss.to_float()
-# 			if ss != null:
-# 				cs.append(ss)
-# 			if cs.size() > 1:break
-# 	return cs
+		# if item_data.type is Type.MELEE:
+		# text += Text.text("DAMAGE_FORMATTED", [col_a + tr("STAT_DAMAGE") + col_b, get_dmg_text_with_scaling_stats(stats, scaling_stats, projectiles)])
 		
-
-func get_dmg_text_with_scaling_stats(damage)->String:
-	return "scaling damage: " + str(damage)
-# 		var a = get_col_a(damage, base_stats.damage)
-# 		var dmg_text = a + str(damage) + col_b
-		
-# 		var text = dmg_text if nb_projectiles == 1 else dmg_text + "x" + str(nb_projectiles)
-		
-# 		if damage != base_stats.damage:
-# 			var initial_dmg_text = str(base_stats.damage) if nb_projectiles == 1 else str(base_stats.damage) + "x" + str(nb_projectiles)
-# 			text += init_a + initial_dmg_text + col_b
-		
-# 		text += " (" + WeaponService.get_scaling_stats_icons(p_scaling_stats) + ")"
-		
-# 		return text
+		var basestats = WeaponService.init_base_stats(stats)
+		var critString = "\n" + Text.text("CRITICAL_FORMATTED", [col_a + tr("CRITICAL") + col_b, get_crit_damage_text(stats, basestats), get_crit_chance_text(stats, basestats)])
 	
+		ModLoaderLog.info("final crit string", critString)
+		text += critString
+		
+		text += "\n" + Text.text("STAT_FORMATTED", [col_a + tr("COOLDOWN") + col_b, get_cooldown_text(stats, basestats)])
+		
+		ModLoaderLog.info("final appending string", text)
+		# return text
+		get_weapon_stats().append_bbcode("\n" + text)
 
-func get_crit_chance_text(crit_chance)->String:
-	return "crit damage: " + str(crit_chance)
-# 	# var original = .get_crit_chance_text(base_stats)
-# 	var a = get_col_a(crit_chance, base_stats.crit_chance)
-# 	var original = a + str(max(crit_chance * 100.0, 0)) + col_b
+
+func get_col_a(value:float, base_value:float)->String:
+	if value > base_value:return col_pos_a
+	elif value == base_value:return col_neutral_a
+	else :return col_neg_a
+
+func get_crit_damage_text(current_stats, base_stats:Resource)->String:
+	var a = get_col_a(current_stats.crit_damage, base_stats.crit_damage)
+	return a + "x" + str(current_stats.crit_damage) + col_b
+
+func get_crit_chance_text(current_stats, base_stats:Resource)->String:
+	# return a + str(max(current_stats.crit_chance * 100.0, 0)) + col_b
+
+	var crit_chance = current_stats.crit_chance
+
+	# var original = .get_crit_chance_text(base_stats)
+	var a = get_col_a(crit_chance, base_stats.crit_chance)
+	var original = a + str(max(crit_chance * 100.0, 0)) + col_b
 	
-# 	var modified = original if crit_chance == base_stats.crit_chance else original+"%)" + init_a + "(" + str(max(base_stats.crit_chance * 100.0, 0))
+	var modified = original if crit_chance == base_stats.crit_chance else original+"%)" + init_a + "(" + str(max(base_stats.crit_chance * 100.0, 0)) + col_b
 
-# 	# ModLoaderLog.info("original crit string", original)
-# 	# ModLoaderLog.info("modded crit string", modified)
+	# ModLoaderLog.info("original crit string", original)
+	# ModLoaderLog.info("modded crit string", modified)
 	
-# 	return modified
+	return modified
+	
+		
+	
+func get_cooldown_text(current_stats, base_stats:Resource, multiplier:float = 1.0)->String:
+	# var cd = current_stats.get_shooting_total_duration()
+	# var cd = 0
+	# var base_cd = base_stats.cooldown
+	# var a = get_col_a( - cd, - base_cd)
+	# return a + str(stepify(cd * multiplier, 0.01)) + "s" + col_b
 
-func get_cooldown_text(cooldown)->String:
-	return "cooldown: " + str(cooldown)
-# 	var original = .get_cooldown_text(base_stats, multiplier)
+	# var cd = current_stats.shooting_data.duration
+	var cd = 0
+	var base_cd = base_stats.cooldown
+	var a = get_col_a( - cd, - base_cd)
 
-# 	var cd = get_cooldown_value(base_stats)
-# 	var base_cd = get_base_cooldown_value(base_stats)
-# 	var a = get_col_a( - cd, - base_cd)
-# 	# return a + str(stepify(cd * multiplier, 0.01)) + "s" + col_b
+	var original = a + str(stepify(cd * multiplier, 0.01)) + "s"
 
-# 	var modified = original if cd == base_cd else a + str(stepify(cd * multiplier, 0.01)) + "s" + col_b + init_a + str(stepify(base_cd * multiplier, 0.01)) + "s"  + col_b
-# 	# ModLoaderLog.info("modded cooldown string", modified)
+	var modified = original if cd == base_cd else a + str(stepify(cd * multiplier, 0.01)) + "s" + col_b + init_a + str(stepify(base_cd * multiplier, 0.01)) + "s"  + col_b
+	# ModLoaderLog.info("modded cooldown string", modified)
 
-# 	return modified
+	return modified
