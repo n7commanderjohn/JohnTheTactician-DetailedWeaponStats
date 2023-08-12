@@ -15,7 +15,7 @@ var dir = ""
 var ext_dir = ""
 
 
-func _init(_modLoader = ModLoaderMod):
+func _init(_modLoaderMod = ModLoaderMod):
 	ModLoaderLog.info("Init", MYMOD_LOG)
 
 	# ! We can't use `ModLoader` because the ModLoader instance isn't available
@@ -33,7 +33,12 @@ func _init(_modLoader = ModLoaderMod):
 	#modLoader.install_script_extension(ext_dir + "entities/units/player/player.gd") # ! Note that this file does not exist in this example mod
 
 	# ! Add extensions (longform version of the above)
-	ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	# ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	ModLoaderLog.info("before starting deferred call for the mod", MYMOD_LOG)
+	ModLoaderMod.new().call_deferred("install_script_extension", "res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	ModLoaderLog.info("after starting deferred call for the mod", MYMOD_LOG)
+	# ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+
 	#modLoader.install_script_extension("res://mods-unpacked/AuthorName-ModName/extensions/entities/units/player/player.gd")
 
 	# Add translations
@@ -46,9 +51,14 @@ func _init(_modLoader = ModLoaderMod):
 
 
 func _ready()->void:
-	ModLoaderLog.info("Ready", MYMOD_LOG)
+	# ModLoaderMod.new().call_deferred("install_script_extension", MOD_DIR + "extensions/weapons/weapon_stats/weapon_stats.gd")
+	# ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	# Utils.call_deferred("install_script_extension", "res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	ModLoaderLog.info("Inside _ready() function for Detailed Weapon Stats", MYMOD_LOG)
 
 	# ! This uses Godot's native `tr` func, which translates a string. You'll
 	# ! find this particular string in the example CSV here: translations/modname.csv
 	# ModLoaderLog.info(str("Translation Demo: ", tr("MODNAME_READY_TEXT")), MYMOD_LOG)
-	ModLoaderLog.info("Detailed Weapon Stats", MYMOD_LOG)
+	# ModLoaderLog.info("Detailed Weapon Stats", MYMOD_LOG)
+
+# func install_script_extension()

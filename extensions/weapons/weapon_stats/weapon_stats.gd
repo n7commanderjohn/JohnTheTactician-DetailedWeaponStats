@@ -8,11 +8,22 @@ extends "res://weapons/weapon_stats/weapon_stats.gd"
 # var b = "text"
 
 const MYMOD_LOG = "JohnTheTactician-DetailedWeaponStats" # ! Change `MODNAME` to your actual mod's name
+const MOD_DIR = "JohnTheTactician-DetailedWeaponStats/" # name of the folder that this file is in
 
+# func _init():
+# 	ModLoaderMod.new().call_deferred("install_script_extension", "res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	ModLoaderLog.info("Ready for weapon detail stats", MYMOD_LOG)
+	# ModLoaderMod.new().call_deferred("install_script_extension", MOD_DIR + "extensions/weapons/weapon_stats/weapon_stats.gd")
+	# ModLoaderMod.new().call_deferred("install_script_extension('res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd')")
+	# Utils.call_deferred("install_script_extension", MOD_DIR + "extensions/weapons/weapon_stats/weapon_stats.gd")
+	ModLoaderLog.info("Inside of _ready() of extended weapon_stats.gd", MYMOD_LOG)
+	# ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	ModLoaderLog.info("before call deferral of _ready() of extended weapon_stats.gd", MYMOD_LOG)
+	# ModLoaderMod.new().call_deferred("install_script_extension", "res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	ModLoaderLog.info("after call deferral of _ready() of extended weapon_stats.gd", MYMOD_LOG)
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,6 +31,7 @@ func _ready():
 #	pass
 
 func get_text(base_stats:Resource)->String:
+	ModLoaderLog.info("inside of get_text of extended weapon_stats.gd", MYMOD_LOG)
 	var text = ""
 	
 	text += Text.text("DAMAGE_FORMATTED", [col_a + tr("STAT_DAMAGE") + col_b, get_damage_text(base_stats)])
