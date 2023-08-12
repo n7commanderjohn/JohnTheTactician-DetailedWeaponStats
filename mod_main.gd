@@ -33,7 +33,10 @@ func _init(_modLoader = ModLoaderMod):
 	#modLoader.install_script_extension(ext_dir + "entities/units/player/player.gd") # ! Note that this file does not exist in this example mod
 
 	# ! Add extensions (longform version of the above)
-	ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	# ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/weapons/weapon_stats/weapon_stats.gd")
+	# ! needed to chain install the actual mod above
+	ModLoaderMod.install_script_extension("res://mods-unpacked/JohnTheTactician-DetailedWeaponStats/extensions/singletons/menu_data.gd")
+
 	#modLoader.install_script_extension("res://mods-unpacked/AuthorName-ModName/extensions/entities/units/player/player.gd")
 
 	# Add translations
