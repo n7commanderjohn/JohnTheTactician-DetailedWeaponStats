@@ -24,7 +24,7 @@ func get_text(base_stats:Resource)->String:
 	
 	text += Text.text("DAMAGE_FORMATTED", [col_a + tr("STAT_DAMAGE") + col_b, get_damage_text(base_stats)])
 	
-	var critString = "\n" + Text.text("CRITICAL_FORMATTED", [col_a + tr("CRITICAL") + col_b, get_crit_damage_text(base_stats), get_crit_chance_text(base_stats)])  + col_b
+	var critString = "\n" + Text.text("CRITICAL_FORMATTED", [col_a + tr("CRITICAL") + col_b, get_crit_damage_text(base_stats), get_crit_chance_text(base_stats)])
 
 	# ModLoaderLog.info("final crit string", critString)
 	text += critString
@@ -48,7 +48,7 @@ func get_crit_chance_text(base_stats:Resource)->String:
 	var a = get_col_a(crit_chance, base_stats.crit_chance)
 	var original = a + str(max(crit_chance * 100.0, 0)) + col_b
 	
-	var modified = original if crit_chance == base_stats.crit_chance else original+"%)" + init_a + "(" + str(max(base_stats.crit_chance * 100.0, 0))
+	var modified = original if crit_chance == base_stats.crit_chance else original+"%)" + init_a + "(" + str(max(base_stats.crit_chance * 100.0, 0)) + col_b
 
 	# ModLoaderLog.info("original crit string", original)
 	# ModLoaderLog.info("modded crit string", modified)
